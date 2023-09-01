@@ -12,6 +12,9 @@
 			<if test='uiNum !=0'>
 			AND UI_NUM =#{uiNum}
 			</if>
+			<if test='uiId ! =null and uiId !=""'>
+			AND UI_ID =#{uiId}
+			</if>
 		</where>
 	</select>
 	<select id="selectUserInfo"
@@ -21,6 +24,15 @@
 		WHERE
 		UI_NUM =#{uiNum}
 	</select>
+		<select id="selectUserInfoByIdAndPwd"
+		resultType="com.game.team3.vo.UserInfoVO">
+		SELECT UI_NUM,UI_NAME,UI_ID,UI_PWD
+		FROM USER_INFO
+		WHERE UI_ID=#{uiId}
+		AND UI_PWD=#{uiPwd}
+	
+	</select>
+	
 	<insert id="insertUsertInfo">
 		Insert INTO USER_INFO(UI_NAME,UI_ID,UI_PWD)
 		VALUES(#{uiName},#{uiId},#{uiPwd})
