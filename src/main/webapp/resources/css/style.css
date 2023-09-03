@@ -1,0 +1,16 @@
+@charset "EUC-KR";
+body {
+    margin: 0;
+    overflow: none; 
+    cursor: none;
+  }
+  
+  .custom-cursor {
+    position: fixed; 
+    width: 100px;
+    height: 100px;
+    background-image: url('img/hamer.png');
+    background-size: cover;
+    pointer-events: none;
+
+  }

@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" href="styles.css" />
+  </head>
+
+  <style>
+    body {
+      background-image: url("img/background.jpg");
+    }
+    table {
+      margin-top: 80px;
+    }
+    #startButton {
+      display: inline-block;
+      background-color: transparent;
+      border: none;
+    }
+    #startButton:hover {
+      cursor: pointer;
+    }
+    #colorText {
+      font-size: 80px;
+      font-style: oblique;
+    }
+    #point {
+      font-size: 50px;
+    }
+    #imgBtn {
+      display: inline-block;
+      background-color: transparent;
+      border: none;
+    }
+    table {
+      width: 500px;
+      table-layout: fixed;
+    }
+  </style>
+
+  <body>
+    <div class="custom-cursor"></div>
+    <script src="script.js"></script>
+    <div style="text-align: center">
+      <p id="colorText">두더지를 잡아라!!!!!</p>
+    </div>
+    <div style="text-align: center"><p id="point">0</p></div>
+    <div style="text-align: center"><p id="countText">0</p></div>
+    <div id="hole" style="margin-top: 0"></div>
+    <div style="text-align: center">
+      <button id="startButton" onclick="start()">
+        <img src="img/start.png" width="150px" height="150px" />
+      </button>
+    </div>
+
+    <script>
+      let html = "<table align='center'>";
+      let cnt = 1;
+      const arr = [];
+      let clickCount = 1; // 클릭 횟수를 추적할 변수
+      const maxClicks = 10; // 최대 클릭 횟수
+      let point = 0; // 점수
+      let currentColorValue = "";
+      let countText = 0; //라운드
+
+      for (let i = 1; i <= 2; i++) {
+        html += "<tr>";
+        for (let j = 1; j < 4; j++) {
+          html += `<td><button id="imgBtn" onclick="upMsg(this)" data-num="${cnt++}" disabled="disabled"><img src="img/hole.png" /></button></td>`;
+        }
+        html += "</tr>";
+      }
+      html += "</table>";
+      document.querySelector("#hole").innerHTML = html;
+
+      function changeImg() {
+        const cells = document.querySelectorAll("td");
+        let randomCellIndex = Math.floor(Math.random() * cells.length);
+        let colorRandom = Math.random() < 0.5 ? "red" : "blue";
+
+        //  이미지 변경
+        for (let i = 0; i < cells.length; i++) {
+          if (i === randomCellIndex) {
+            let colorRandom = Math.random() < 0.5 ? "red" : "blue";
+            cells[
+              i
+            ].innerHTML = `<button id="imgBtn" onclick="upMsg(this)" data-num="${randomCellIndex}" data-color="${colorRandom}"><img src="img/${colorRandom}.png"/></button>`;
+          } else {
+            cells[i].innerHTML = '<img src="img/hole.png" />';
+          }
+        }
+      }
+
+      function changeText() {
+        const colorTextElement = document.getElementById("colorText");
+        const textColors = ["빨간색", "파란색"];
+        const colorValues = ["red", "blue"];
+
+        const randomIndex = Math.floor(Math.random() * textColors.length);
+        const currentColor = textColors[randomIndex];
+        currentColorValue = colorValues[randomIndex];
+        colorTextElement.textContent = `${currentColor}`;
+        colorTextElement.style.color = currentColorValue;
+        countText++; //라운드
+        document.querySelector("#countText").innerHTML = countText;
+      }
+
+      //이미지 클릭 메소드
+      function upMsg(obj) {
+        const moleColor = obj.getAttribute("data-color");
+        const textColor = currentColorValue;
+        const cursor = document.querySelector(".custom-cursor");
+        const originalImg = obj.innerHTML;
+
+        // 다른 이미지로 변경
+        obj.innerHTML = `<img src="img/hamer1.png" />`;
+        console.log(obj);
+        if (moleColor == textColor) {
+          ++point;
+          obj.disabled = true;
+        } else {
+          --point;
+          obj.disabled = true;
+        }
+
+        document.querySelector("#point").innerHTML = point;
+
+        if (clickCount < maxClicks) {
+          // 클릭 횟수가 최대 횟수 미만일 때만 처리
+          console.log(clickCount);
+
+          clickCount++; // 클릭 횟수 증가
+        } else {
+          alert("게임이 종료 되었습니다! 점수는 : " + point);
+          location.reload(true);
+        }
+      }
+
+      function start() {
+        const countdownElement = document.getElementById("colorText"); // 텍스트 엘리먼트 가져오기
+        let countdown = 3; // 시작 카운트다운 시간 설정
+
+        // 3초 카운트다운 구현
+        const countdownInterval = setInterval(function () {
+          countdownElement.textContent = `${countdown}초 후 시작`; // 텍스트 업데이트
+          countdown--;
+
+          if (countdown < 0) {
+            clearInterval(countdownInterval); // 카운트다운 종료
+            countdownElement.textContent = "두더지를 잡아라!!!!!"; // 게임 시작 텍스트로 변경
+
+            // 3초 후 게임 시작
+            setInterval(function () {
+              changeImg();
+              changeText();
+            }, 1000);
+
+            clickCount = 1; // 시작할 때 클릭 횟수 초기화
+          }
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>
