@@ -51,7 +51,7 @@
     <div id="hole" style="margin-top: 0"></div>
     <div style="text-align: center">
       <button id="startButton" onclick="start()">
-        <img src=".././imgimg/start.png" width="150px" height="150px" />
+        <img src=".././img/start.png" width="150px" height="150px" />
       </button>
     </div>
 
@@ -68,7 +68,7 @@
       for (let i = 1; i <= 2; i++) {
         html += "<tr>";
         for (let j = 1; j < 4; j++) {
-          html += `<td><button id="imgBtn" onclick="upMsg(this)" data-num="${cnt++}" disabled="disabled"><img src=".././imgimg/hole.png" /></button></td>`;
+          html += `<td><button id="imgBtn" onclick="upMsg(this)" data-num="${cnt++}" disabled="disabled"><img src=".././img/hole.png" /></button></td>`;
         }
         html += "</tr>";
       }
@@ -86,9 +86,9 @@
             let colorRandom = Math.random() < 0.5 ? "red" : "blue";
             cells[
               i
-            ].innerHTML = `<button id="imgBtn" onclick="upMsg(this)" data-num="${randomCellIndex}" data-color="${colorRandom}"><img src=".././imgimg/${colorRandom}.png"/></button>`;
+            ].innerHTML = `<button id="imgBtn" onclick="upMsg(this)" data-num="${randomCellIndex}" data-color="${colorRandom}"><img src=".././img/${colorRandom}.png"/></button>`;
           } else {
-            cells[i].innerHTML = '<img src=".././imgimg/hole.png" />';
+            cells[i].innerHTML = '<img src=".././img/hole.png" />';
           }
         }
       }
@@ -115,7 +115,7 @@
         const originalImg = obj.innerHTML;
 
         // 다른 이미지로 변경
-        obj.innerHTML = `<img src="img/hamer1.png" />`;
+        obj.innerHTML = `<img src=".././img/hamer1.png" />`;
         console.log(obj);
         if (moleColor == textColor) {
           ++point;
