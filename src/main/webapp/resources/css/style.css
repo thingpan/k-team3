@@ -9,7 +9,7 @@ body {
     position: fixed; 
     width: 100px;
     height: 100px;
-    background-image: url('img/hamer.png');
+    background-image: url('.././imgimg/hamer.png');
     background-size: cover;
     pointer-events: none;
 
